@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genshin Impact Wish Simulator - Gacha Pull Simulator with Pity System</title>
+    <meta name="description" content="Free Genshin Impact wish simulator with accurate pity system, 90-pull 5-star guarantee, and 10-pull 4-star guarantee. Unofficial fan project for entertainment.">
+    <link rel="canonical" href="https://wish.gamerpath.top/">
+    <meta name="robots" content="index, follow">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 720px;
+            margin: 20px auto;
+            padding: 0 16px;
+            background: #f0f4f8;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8em;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 1.3em;
+            margin-top: 20px;
+        }
+        .simulator-box {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 20px 0;
+        }
+        .result-area {
+            min-height: 140px;
+            margin: 20px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: left;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 8px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            padding: 14px 24px;
+            font-size: 1em;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-single {
+            background: #3498db;
+        }
+        .btn-single:hover {
+            background: #2980b9;
+        }
+        .btn-ten {
+            background: #e67e22;
+        }
+        .btn-ten:hover {
+            background: #d35400;
+        }
+        .btn-reset {
+            background: #95a5a6;
+        }
+        .btn-reset:hover {
+            background: #7f8c8d;
+        }
+        .btn:disabled {
+            background: #bbb;
+            cursor: not-allowed;
+        }
+        .stats {
+            margin-top: 15px;
+            font-size: 0.95em;
+            color: #555;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        .disclaimer {
+            background: #fef9e7;
+            border: 1px solid #f9e79f;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            color: #7d6608;
+            margin-top: 30px;
+            text-align: left;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #999;
+            text-align: center;
+        }
+        .five-stars {
+            color: #d4af37;
+            font-weight: bold;
+        }
+        .four-stars {
+            color: #9b59b6;
+            font-weight: bold;
+        }
+        .three-stars {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1>Genshin Impact Wish Simulator</h1>
+    <p>Simulate gacha pulls with the <strong>real pity system</strong>. No real money needed. This is an unofficial fan-made project for entertainment only.</p>
+    <div class="simulator-box">
+        <h2>Make a Wish</h2>
+        <div class="btn-group">
+            <button class="btn btn-single" id="singleBtn" onclick="doPull(1)">Pull ×1</button>
+            <button class="btn btn-ten" id="tenBtn" onclick="doPull(10)">Pull ×10</button>
+            <button class="btn btn-reset" onclick="resetSimulator()">Reset</button>
+        </div>
+        <div class="result-area" id="resultDisplay">
+            Click a button to start wishing!
+        </div>
+        <div class="stats">
+            <h2 style="margin-top:0;">Your Stats</h2>
+            Total pulls: <span id="pullCount">0</span><br>
+            5-star count: <span id="fiveStarCount">0</span> | 4-star count: <span id="fourStarCount">0</span><br>
+            Pulls since last 5-star: <span id="pityCounter">0</span> / 90<br>
+            Pulls since last 4-star: <span id="fourPityCounter">0</span> / 10
+        </div>
+    </div>
+    <div class="disclaimer">
+        <strong>Disclaimer:</strong>
+        This wish simulator is an unofficial fan project created for entertainment and educational purposes only.
+        It is not affiliated with, endorsed by, or sponsored by HoYoverse or miHoYo.
+        Genshin Impact and all related characters, names, and assets are the property of HoYoverse.
+        No real money is used or accepted. All data is stored locally in your browser. We do not collect, store, or share any personal information.
+        This page does not use cookies or tracking scripts.
+        If you believe any content on this page infringes your rights, please contact us for immediate removal.<br><br>
+        <strong>Contact:</strong> contact@gamerpath.top<br>
+        <strong>DMCA Notice:</strong> dmca@gamerpath.top
+    </div>
+    <footer>
+        <p>© 2026 GamerPath. All rights reserved.</p>
+        <p>This is a fan-made simulator. Not affiliated with HoYoverse.</p>
+    </footer>
+    <script>
+        // 角色池
+        const fiveStars = ["Diluc", "Jean", "Keqing", "Mona", "Qiqi", "Tighnari", "Dehya", "Ganyu", "Shenhe", "Yelan"];
+        const fourStars = ["Bennett", "Xiangling", "Fischl", "Barbara", "Noelle", "Sucrose", "Rosaria", "Diona", "Xingqiu", "Beidou", "Yanfei", "Kuki Shinobu"];
+        const threeStarWeapons = ["Debate Club", "Harbinger of Dawn", "Magic Guide", "Sharpshooter's Oath", "Raven Bow", "Black Tassel", "Thrilling Tales of Dragon Slayers", "Slingshot"];
+
+        let totalPulls = 0;
+        let fiveStarCount = 0;
+        let fourStarCount = 0;
+        let pityCounter = 0;      // 距离上次5星多少抽
+        let fourPityCounter = 0;  // 距离上次4星多少抽
+        let isPulling = false;
+
+        const resultDisplay = document.getElementById("resultDisplay");
+        const singleBtn = document.getElementById("singleBtn");
+        const tenBtn = document.getElementById("tenBtn");
+
+        // 存档读写
+        function saveData() {
+            const saveObj = { totalPulls, fiveStarCount, fourStarCount, pityCounter, fourPityCounter };
+            localStorage.setItem("genshinWishSave", JSON.stringify(saveObj));
+        }
+        function loadData() {
+            const saved = localStorage.getItem("genshinWishSave");
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    totalPulls = Number(data.totalPulls) || 0;
+                    fiveStarCount = Number(data.fiveStarCount) || 0;
+                    fourStarCount = Number(data.fourStarCount) || 0;
+                    pityCounter = Number(data.pityCounter) || 0;
+                    fourPityCounter = Number(data.fourPityCounter) || 0;
+                    updateStats();
+                } catch (e) {
+                    localStorage.removeItem("genshinWishSave");
+                }
+            }
+        }
+
+        function doPull(times) {
+            if (isPulling) return;
+            isPulling = true;
+            singleBtn.disabled = true;
+            tenBtn.disabled = true;
+            document.querySelector(".btn-reset").disabled = true;
+
+            let results = [];
+            let roundHasFourStar = false;
+
+            for (let i = 0; i < times; i++) {
+                totalPulls++;
+                pityCounter++;
+                fourPityCounter++;
+                let roll = Math.random() * 100;
+                let isFiveStar = false;
+                let isFourStar = false;
+
+                if (pityCounter >= 90 || roll < 1.6) {
+                    isFiveStar = true;
+                }
+
+                if (isFiveStar) {
+                    const char = fiveStars[Math.floor(Math.random() * fiveStars.length)];
+                    results.push(`<span class="five-stars">★★★★★ ${char}</span>`);
+                    fiveStarCount++;
+                    pityCounter = 0;
+                    fourPityCounter = 0;
+                    roundHasFourStar = true;
+                } else {
+                    if (fourPityCounter >= 10 || roll < 14.6) {
+                        isFourStar = true;
+                    }
+                    if (isFourStar) {
+                        const char = fourStars[Math.floor(Math.random() * fourStars.length)];
+                        results.push(`<span class="four-stars">★★★★ ${char}</span>`);
+                        fourStarCount++;
+                        fourPityCounter = 0;
+                        roundHasFourStar = true;
+                    } else {
+                        const weapon = threeStarWeapons[Math.floor(Math.random() * threeStarWeapons.length)];
+                        results.push(`<span class="three-stars">★★★ ${weapon}</span>`);
+                    }
+                }
+            }
+
+            // 十连保底补充四星：本轮无四星，替换最后一条为四星
+            if (times === 10 && !roundHasFourStar) {
+                results.pop();
+                const char = fourStars[Math.floor(Math.random() * fourStars.length)];
+                results.push(`<span class="four-stars">★★★★ ${char}</span>`);
+                fourStarCount++;
+                fourPityCounter = 0;
+            }
+
+            resultDisplay.innerHTML = results.join("<br>");
+            resultDisplay.scrollTop = resultDisplay.scrollHeight;
+            updateStats();
+            saveData();
+
+            setTimeout(() => {
+                singleBtn.disabled = false;
+                tenBtn.disabled = false;
+                document.querySelector(".btn-reset").disabled = false;
+                isPulling = false;
+            }, 300);
+        }
+
+        function resetSimulator() {
+            totalPulls = 0;
+            fiveStarCount = 0;
+            fourStarCount = 0;
+            pityCounter = 0;
+            fourPityCounter = 0;
+            resultDisplay.innerHTML = "Simulator reset. Click a button to start wishing!";
+            updateStats();
+            localStorage.removeItem("genshinWishSave");
+        }
+
+        function updateStats() {
+            document.getElementById("pullCount").textContent = totalPulls;
+            document.getElementById("fiveStarCount").textContent = fiveStarCount;
+            document.getElementById("fourStarCount").textContent = fourStarCount;
+            document.getElementById("pityCounter").textContent = pityCounter;
+            document.getElementById("fourPityCounter").textContent = fourPityCounter;
+        }
+        // 页面加载读取存档
+        loadData();
+    </script>
+</body>
+</html>
