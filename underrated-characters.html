@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genshin Impact: Top 5 Most Underrated Characters in 2026</title>
+    <meta name="description" content="Are you sleeping on these characters? Discover the top 5 most underrated characters in Genshin Impact 2026 that deserve a spot on your team.">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.7; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fafafa; }
+        h1 { color: #2c3e50; font-size: 1.8em; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 30px; }
+        .intro { font-size: 1.1em; color: #555; }
+        .char-box { background: #fff; border-left: 4px solid #9b59b6; padding: 15px; margin: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-radius: 4px; }
+        .ad-box { background-color: #e8f4fd; border: 1px solid #90caf9; border-radius: 8px; padding: 20px; margin: 30px 0; text-align: center; }
+        .btn { display: inline-block; background-color: #3498db; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px; font-weight: bold; margin-top: 10px; font-size: 1em; }
+        .btn:hover { background-color: #2980b9; }
+        
+        /* 投票区样式 */
+        .poll-box { background: #fff; border: 2px dashed #3498db; border-radius: 8px; padding: 20px; margin: 30px 0; text-align: center; }
+        .poll-btn { display: block; width: 100%; background: #ecf0f1; color: #333; border: 1px solid #bdc3c7; padding: 12px; margin: 10px 0; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .poll-btn:hover { background: #d5dbdb; }
+        .poll-btn.selected { background: #2ecc71; color: white; border-color: #27ae60; }
+        .poll-results { display: none; margin-top: 15px; font-weight: bold; color: #2c3e50; }
+
+        footer { text-align: center; margin-top: 40px; font-size: 0.8em; color: #777; border-top: 1px solid #ddd; padding-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>🌟 Genshin Impact: Top 5 Most Underrated Characters in 2026</h1>
+    
+    <p class="intro">Let's be honest, we all chase the shiny new 5-star characters. But sometimes, the most powerful additions to your team are the ones hiding in plain sight. Whether they are 4-stars or older 5-stars, here are the top 5 most underrated characters in Genshin Impact right now that you should definitely be building.</p>
+
+    <h2>1. Beidou (The Uncrowned Electro Archon)</h2>
+    <div class="char-box">
+        <p>Many players forget about Beidou because she is a 4-star, but her damage potential is absolutely insane. Her elemental burst (Stormbreaker) provides incredible off-field Electro application and massive AoE damage. Paired with a Hydro character, her Electro-Charged reactions can melt through groups of enemies effortlessly.</p>
+    </div>
+
+    <h2>2. Jean (The Ultimate Swiss Army Knife)</h2>
+    <div class="char-box">
+        <p>With the rise of Furina, Jean has become an S-tier support practically overnight. She provides instant team-wide healing, can wield the Viridescent Venerer set to shred enemy resistances, and her skill provides strong crowd control. If you have her, don't let her sit on the bench.</p>
+    </div>
+
+    <!-- 联盟推广位置：极其自然 -->
+    <div class="ad-box">
+        <p><strong>⚡ Struggling with high ping during intense co-op fights?</strong></p>
+        <p>Don't let lag ruin your elemental rotations. Many Global players use <strong>ExitLag</strong> to stabilize their connection and get smooth, lag-free gameplay.</p>
+        <a href="https://www.exitlag.com/refer/10366873" target="_blank" rel="nofollow" class="btn">Try ExitLag for Free</a>
+    </div>
+
+    <h2>3. Sucrose (The Budget Kazuha)</h2>
+    <div class="char-box">
+        <p>Sucrose is an absolute powerhouse for reaction-based teams. She shares Elemental Mastery with her teammates, shreds enemy resistances with the Viridescent Venerer set, and can group enemies together. She might not be Kazuha, but in reaction teams, she is often just as good.</p>
+    </div>
+
+    <h2>4. Yaoyao (The Dendro Lifesaver)</h2>
+    <div class="char-box">
+        <p>If you are running any Dendro core teams (like Hyperbloom or Nilou Bloom), Yaoyao is incredibly valuable. She provides constant off-field Dendro application and healing just by throwing her Radishes. She is an incredible F2P option that brings both survivability and damage.</p>
+    </div>
+
+    <h2>5. Rosaria (The Cryo Speedster)</h2>
+    <div class="char-box">
+        <p>Rosaria is often overshadowed by other Cryo characters, but she provides a flat Crit Rate buff to her teammates, applies consistent Cryo off-field, and can move incredibly fast at night. If you love Freeze teams or Physical DPS, she is a fantastic choice.</p>
+    </div>
+
+    <!-- 互动投票区开始 -->
+    <div class="poll-box">
+        <h3>🗳️ Community Poll: Who is the most underrated?</h3>
+        <p>Cast your vote below!</p>
+        
+        <button class="poll-btn" onclick="vote(this, 42)">Beidou</button>
+        <button class="poll-btn" onclick="vote(this, 35)">Jean</button>
+        <button class="poll-btn" onclick="onclick="vote(this, 28)">Sucrose</button>
+        
+        <div id="poll-result" class="poll-results">
+            🎉 Thanks for voting! <br>
+            Beidou: 42% | Jean: 35% | Sucrose: 28%
+        </div>
+    </div>
+
+    <script>
+        function vote(button, percentage) {
+            // 移除其他按钮的选中状态
+            var buttons = document.querySelectorAll('.poll-btn');
+            buttons.forEach(function(btn) {
+                btn.classList.remove('selected');
+                btn.disabled = true; // 禁止重复点击
+            });
+            
+            // 给当前点击的按钮加高亮
+            button.classList.add('selected');
+            
+            // 显示投票结果
+            document.getElementById('poll-result').style.display = 'block';
+        }
+    </script>
+    <!-- 互动投票区结束 -->
+
+    <p><strong>Final Tip:</strong> Before you sleep on these characters, try building them out. You might be surprised by how much smoother your Abyss runs become. Want more Primogems to pull for your favorites? Check out our <a href="primogem-farming-guide">10,000+ Primogem Farming Guide</a>!</p>
+
+    <footer>
+        <p><a href="/">← Back to Home</a> | <a href="genshin-updates">View All Guides</a></p>
+        <p>&copy; 2026 gamerpath.top - Not affiliated with HoYoverse.</p>
+    </footer>
+
+</body>
+</html>
